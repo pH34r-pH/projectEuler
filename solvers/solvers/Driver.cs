@@ -11,10 +11,17 @@ namespace solvers
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Enter the number of the problem to solve: ");
-            string Problem = "P" + Console.ReadLine();
+            MethodInfo Solution;
+            do {
+                Console.WriteLine("Enter the number of the problem to solve: ");
+                string Problem = "P" + Console.ReadLine();
+                Solution = typeof(Problems).GetMethod(Problem);
+
+                if(Solution == null) { Console.WriteLine("Sorry, that's not a valid problem."); }
+            } while (Solution == null);
+
             Console.WriteLine("Solving...");
-            typeof(Problems).GetMethod(Problem).Invoke(null, null);
+            Solution.Invoke(null, null);
             Console.WriteLine("Press the enter key to quit.");
             Console.ReadLine();
         }

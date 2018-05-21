@@ -25,5 +25,22 @@ namespace solvers
             int sum = Helpers.FibonnaciNums().Where(x => x % 2 == 0).TakeWhile(c => c < 4000000).Sum();
             Console.WriteLine("Sum: " + sum);
         }
+
+        /// <summary>
+        /// The largest prime factor of the number 600851475143
+        /// </summary>
+        public static void P3()
+        {
+            double MagicNumber = 600851475143;
+            int MaxPrime = 0;
+            foreach (int num in Helpers.PrimesUpTo((int)Math.Ceiling(Math.Sqrt(MagicNumber))))
+            {
+                if(MagicNumber%num == 0 && num > MaxPrime)
+                {
+                    MaxPrime = num;
+                }
+            }
+            Console.WriteLine("Largest Prime Factor: " + MaxPrime);
+        }
     }
 }
