@@ -42,5 +42,26 @@ namespace solvers
             }
             Console.WriteLine("Largest Prime Factor: " + MaxPrime);
         }
+
+        /// <summary>
+        /// The largest number that is a product of two 3-digit numbers and a palindrome
+        /// </summary>
+        public static void P4()
+        {
+            int i, j, max;
+            max = 0;
+            for(i = 999; i > 0; --i)
+            {
+                for(j = 999; j > 0; --j)
+                {
+                    if (Helpers.IsPalindrome(i * j) && i*j > max)
+                    {
+                        max = i * j;
+                    }
+
+                }
+            }
+            Console.WriteLine("Largest Palindrome: " + max);
+        }
     }
 }

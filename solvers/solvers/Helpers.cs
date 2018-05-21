@@ -53,5 +53,16 @@ namespace solvers
                     yield return i;
             }
         }
+
+        public static bool IsPalindrome(int number)
+        {
+            string num = number.ToString();
+            for(int i = 0; i < num.Length/2; i++)
+            {
+                if (num[i] != num[num.Length - 1 - i])
+                    return false;
+            }
+            return true;
+        }
     }
 }
