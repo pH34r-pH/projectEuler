@@ -13,12 +13,7 @@ namespace solvers
         /// </summary>
         public static void P1()
         {
-            int sum = 0;
-            for(int i = 0; i < 1000; ++i)
-            {
-                if (i % 3 == 0 || i % 5 == 0)
-                    sum += i;
-            }
+            int sum = Enumerable.Range(0, 1000).Where(x => x % 3 == 0 || x % 5 == 0).Sum();
             Console.WriteLine("Sum: " + sum);
         }
 
