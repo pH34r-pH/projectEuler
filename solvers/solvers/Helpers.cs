@@ -136,5 +136,23 @@ namespace solvers
                 }
             }
         }
+
+        public static long CollatzSequence(long start, long count = 0)
+        {
+            while(start > 1)
+            {
+                count++;
+                if (start % 2 == 0)
+                {
+                    start /= 2;
+                }
+                else
+                {
+                    start *= 3;
+                    start++;
+                }
+            }
+            return count;
+        }
     }
 }

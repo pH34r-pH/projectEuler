@@ -227,5 +227,34 @@ namespace solvers
             }
             Console.WriteLine("The first 10 digits are: " + cheese.ToString().Substring(0,10));
         }
+
+        /// <summary>
+        /// The starting number under 1 million that produces the longest Collatz sequence
+        /// Is it pretty? No, this could be optimized with memoization, but I didn't feel like it and
+        /// it still completes in under 10 seconds so
+        /// </summary>
+        public static void P14()
+        {
+            long longest = 0;
+            int startnum = 0;
+            foreach(int val in Enumerable.Range(0, 1000000))
+            {
+                long length = Helpers.CollatzSequence(val);
+                if (length > longest)
+                {
+                    longest = length;
+                    startnum = val;
+                }
+            }
+            Console.WriteLine("The start number is: " + startnum);
+        }
+
+        /// <summary>
+        /// The number of unique routes in a 20x20 grid, only moving to the right or down
+        /// </summary>
+        public static void P15()
+        {
+
+        }
     }
 }
