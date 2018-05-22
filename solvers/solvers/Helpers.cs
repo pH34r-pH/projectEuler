@@ -40,7 +40,7 @@ namespace solvers
             {
                 if (primes.Get(i))
                 {
-                    for(int j = i*2; j < maxVal; j+=i)
+                    for(int j = i*2; j < maxVal-i; j+=i)
                     {
                         primes.Set(j, false);
                     }
@@ -63,6 +63,29 @@ namespace solvers
                     return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Greatest Common Factor
+        /// </summary>
+        public static int GCF(int a, int b)
+        {
+            int temp;
+            while(b != 0)
+            {
+                temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
+        }
+
+        /// <summary>
+        /// Least Common Multiple
+        /// </summary>
+        public static int LCM(int a, int b)
+        {
+            return (a / GCF(a, b)) * b;
         }
     }
 }
