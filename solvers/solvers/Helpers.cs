@@ -154,5 +154,46 @@ namespace solvers
             }
             return count;
         }
+
+        public static Node BuildMaxSumPathTree(List<List<int>> data, out long maxVal)
+        {
+            Node Root = new Node() { Data = data[0][0] };
+            List<Node> thisRow = new List<Node>();
+            List<Node> lastRow = new List<Node>();
+            lastRow.Add(Root);
+            for (int i = 0; i < data.Count - 1; ++i)
+            {
+                int nextRowCount = data[i + 1].Count;
+                for (int j = 0; j < nextRowCount; ++j)
+                {
+                    Node input = new Node() { Data = data[i + 1][j] };
+                    thisRow.Add(input);
+                    long leftSum, rightSum;
+                    leftSum = rightSum = 0;
+                    if (j < nextRowCount - 1)
+                    {
+                        leftSum = lastRow[j].Data + input.Data;
+                        lastRow[j].Left = input;
+                    }
+                    if (j - 1 >= 0)
+                    {
+                        rightSum = lastRow[j-1].Data + input.Data;
+                        lastRow[j - 1].Right = input;
+                    }
+                    input.Data = leftSum > rightSum ? leftSum : rightSum;
+                }
+                lastRow = new List<Node>(thisRow);
+                thisRow.Clear();
+            }
+            maxVal = lastRow.Max(node => node.Data);
+            return Root;
+        }
+    }
+
+    public class Node
+    {
+        public long Data;
+        public Node Left;
+        public Node Right;
     }
 }

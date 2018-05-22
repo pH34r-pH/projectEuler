@@ -254,7 +254,49 @@ namespace solvers
         /// </summary>
         public static void P15()
         {
+            int gridsize = 20;
+            long pathcount = 1;
+            for(int i = 0; i < gridsize; ++i)
+            {
+                pathcount *= (2 * gridsize) - i;
+                pathcount /= i + 1;
+            }
+            Console.WriteLine("There are {0} paths.", pathcount);
+        }
 
+        /// <summary>
+        /// The sum of the digits of the number 2^1000
+        /// </summary>
+        public static void P16()
+        {
+            long sum = 0;
+            BigInteger cheese = 1;
+            cheese = cheese << 1000;
+
+            foreach(char c in cheese.ToString())
+            {
+                sum += (c - '0');
+            }
+            Console.WriteLine("The sum is: " + sum);
+        }
+
+        /// <summary>
+        /// The number of letters used to write out every number from 1 to 1000 as words (e.g. 342 = three hundred and forty-two)
+        /// not counting spaces or hyphens
+        /// </summary>
+        public static void P17()
+        {
+            // this is more annoying than hard, skiiiiip
+        }
+
+        /// <summary>
+        /// Find the maximum sum by adding adjacent numbers in a treelike pattern from top to bottom
+        /// </summary>
+        public static void P18()
+        {
+            long maxVal = -1;
+            Node root = Helpers.BuildMaxSumPathTree(Inputs.Problem18, out maxVal);
+            Console.WriteLine("The maximum sum path is: " + maxVal);
         }
     }
 }
