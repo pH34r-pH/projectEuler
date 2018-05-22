@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -186,7 +187,7 @@ namespace solvers
                     max = temp > max ? temp : max;
 
                     // down-left <- needs a check
-                    if(j >= 3)
+                    if (j >= 3)
                     {
                         temp = input[i, j] * input[i + 1, j - 1] * input[i + 2, j - 2] * input[i + 3, j - 3];
                         max = temp > max ? temp : max;
@@ -203,7 +204,7 @@ namespace solvers
         public static void P12()
         {
             long triangle = 0;
-            foreach(long tryangle in Helpers.TriangleNumbers())
+            foreach (long tryangle in Helpers.TriangleNumbers())
             {
                 if (Helpers.GetFactors(tryangle).Count() > 500)
                 {
@@ -220,12 +221,12 @@ namespace solvers
         public static void P13()
         {
             BigInteger cheese = new BigInteger();
-            foreach(string cheddar in Inputs.Problem13)
+            foreach (string cheddar in Inputs.Problem13)
             {
                 BigInteger mozzarela = BigInteger.Parse(cheddar);
                 cheese += mozzarela;
             }
-            Console.WriteLine("The first 10 digits are: " + cheese.ToString().Substring(0,10));
+            Console.WriteLine("The first 10 digits are: " + cheese.ToString().Substring(0, 10));
         }
 
         /// <summary>
@@ -237,7 +238,7 @@ namespace solvers
         {
             long longest = 0;
             int startnum = 0;
-            foreach(int val in Enumerable.Range(0, 1000000))
+            foreach (int val in Enumerable.Range(0, 1000000))
             {
                 long length = Helpers.CollatzSequence(val);
                 if (length > longest)
@@ -256,7 +257,7 @@ namespace solvers
         {
             int gridsize = 20;
             long pathcount = 1;
-            for(int i = 0; i < gridsize; ++i)
+            for (int i = 0; i < gridsize; ++i)
             {
                 pathcount *= (2 * gridsize) - i;
                 pathcount /= i + 1;
@@ -269,15 +270,10 @@ namespace solvers
         /// </summary>
         public static void P16()
         {
-            long sum = 0;
             BigInteger cheese = 1;
             cheese = cheese << 1000;
 
-            foreach(char c in cheese.ToString())
-            {
-                sum += (c - '0');
-            }
-            Console.WriteLine("The sum is: " + sum);
+            Console.WriteLine("The sum is: " + Helpers.SumDigits(cheese));
         }
 
         /// <summary>
@@ -297,6 +293,79 @@ namespace solvers
             long maxVal = -1;
             Node root = Helpers.BuildMaxSumPathTree(Inputs.Problem18, out maxVal);
             Console.WriteLine("The maximum sum path is: " + maxVal);
+        }
+
+        /// <summary>
+        /// The number of Sundays on the first of a month from 1 Jan 1901 to 31 Dec 2000
+        /// </summary>
+        public static void P19()
+        {
+            int Sundays = 0;
+            DateTime timeMachine = new DateTime(1901, 1, 1);
+            while (timeMachine.Year < 2001)
+            {
+                Sundays += timeMachine.DayOfWeek == DayOfWeek.Sunday ? 1 : 0;
+                timeMachine = timeMachine.AddMonths(1);
+            }
+            Console.WriteLine("There are {0} Sundays.", Sundays);
+        }
+
+        /// <summary>
+        /// The sum of the digits of 100!
+        /// </summary>
+        public static void P20()
+        {
+            BigInteger cheese = 100;
+            for (int i = 99; i > 0; --i)
+            {
+                cheese *= i;
+            }
+            Console.WriteLine("The sum of the digits is: " + Helpers.SumDigits(cheese));
+        }
+
+        /// <summary>
+        /// The sum of the amicable numbers below 10000
+        /// </summary>
+        public static void P21()
+        {
+            List<int> amicable = new List<int>();
+            for (int i = 1; i < 10000; ++i)
+            {
+                int val = (int)Helpers.GetFactors(i, false).Sum();
+                if (Helpers.GetFactors(val, false).Sum() == i && !amicable.Contains(val) && !amicable.Contains(i) && i != val)
+                {
+                    amicable.Add(i);
+                    amicable.Add(val);
+                }
+            }
+            Console.WriteLine("The sum is: " + amicable.Sum());
+        }
+
+        /// <summary>
+        /// Find the sum of the name scores in the given file
+        /// </summary>
+        public static void P22()
+        {
+            string input = File.ReadAllText("../../names.txt");
+            List<string> names = input.Split(',').Select(n => n.Trim('"')).ToList();
+            names.Sort();
+            int index = 1;
+            long sum = 0;
+            foreach(string name in names)
+            {
+                sum += index * Helpers.SumLetters(name);
+                index++;
+            }
+            Console.WriteLine("The sum is: " + sum);
+        }
+
+        /// <summary>
+        /// The sum of all positive integers that can not be written as the sum of two abundant numbers
+        /// </summary>
+        public static void P23()
+        {
+            // limit: 28123
+
         }
     }
 }

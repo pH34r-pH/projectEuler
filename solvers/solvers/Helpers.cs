@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -110,6 +111,26 @@ namespace solvers
             return (a / GCF(a, b)) * b;
         }
 
+        public static int SumDigits(double input)
+        {
+            return input.ToString().Select(c => (c - '0')).Sum();
+        }
+
+        public static long SumDigits(BigInteger input)
+        {
+            long sum = 0;
+            foreach (char c in input.ToString())
+            {
+                sum += (c - '0');
+            }
+            return sum;
+        }
+
+        public static long SumLetters(string word)
+        {
+            return word.ToLower().Select(c => (c - 'a' + 1)).Sum();
+        }
+
         public static IEnumerable<long> TriangleNumbers()
         {
             long index = 1;
@@ -122,14 +143,22 @@ namespace solvers
             }
         }
 
-        public static IEnumerable<long> GetFactors(long num)
+        /// <summary>
+        /// Returns an iterator that will provide all factors for a number.
+        /// </summary>
+        /// <param name="num"></param>
+        /// <param name="includeSelf">Set to false to exclude num from the output.</param>
+        /// <returns></returns>
+        public static IEnumerable<long> GetFactors(long num, bool includeSelf = true)
         {
             for(long i = 1; i*i <= num; ++i)
             {
                 if (num % i == 0)
                 {
-                    yield return i;
-                    if(i*i != num)
+                    if(includeSelf || i != num)
+                        yield return i;
+                        
+                    if(i*i != num && (includeSelf || i != 1))
                     {
                         yield return num / i;
                     }
