@@ -15,7 +15,7 @@ namespace solvers
         /// <returns></returns>
         public static IEnumerable<int> FibonnaciNums()
         {
-            var numbers = new List<int>(){ 0, 1 };
+            var numbers = new List<int>() { 0, 1 };
             while (true)
             {
                 numbers.Add(numbers[0] + numbers[1]);
@@ -26,30 +26,52 @@ namespace solvers
 
         /// <summary>
         /// Provides an iterator that returns prime numbers up to maxVal.
+        /// This should be able to handle very large numbers.
         /// </summary>
         /// <param name="maxVal"></param>
         /// <returns></returns>
-        public static IEnumerable<int> PrimesUpTo(int maxVal)
+        public static IEnumerable<long> PrimesUpTo(long maxVal)
         {
-            BitArray primes = new BitArray(maxVal);
-            primes.SetAll(true);
-            primes.Set(0, false);
-            primes.Set(1, false);
-            int i = 0;
-            for (; i*i < maxVal; ++i)
+            List<BitArray> primes = new List<BitArray>();
+            if (maxVal < int.MaxValue)
             {
-                if (primes.Get(i))
+                BitArray slot = new BitArray((int)maxVal);
+                slot.SetAll(true);
+                primes.Add(slot);
+            }
+            else
+            {
+                long temp = maxVal;
+                while (temp > int.MaxValue)
                 {
-                    for(int j = i*2; j < maxVal-i; j+=i)
+                    temp -= int.MaxValue;
+                    BitArray slot = new BitArray(int.MaxValue);
+                    slot.SetAll(true);
+                    primes.Add(slot);
+                }
+                BitArray lastslot = new BitArray((int)temp);
+                lastslot.SetAll(true);
+                primes.Add(lastslot);
+            }
+
+            primes[0].Set(0, false);
+            primes[0].Set(1, false);
+
+            long i = 0;
+            for (; i * i < maxVal; ++i)
+            {
+                if (primes[(int)(i / int.MaxValue)].Get((int)(i % int.MaxValue)))
+                {
+                    for (long j = i * 2; j < maxVal - i; j += i)
                     {
-                        primes.Set(j, false);
+                        primes[(int)(j / int.MaxValue)].Set((int)(j % int.MaxValue), false);
                     }
                     yield return i;
                 }
             }
-            for(; i < maxVal; ++i)
+            for (; i < maxVal; ++i)
             {
-                if (primes.Get(i))
+                if (primes[(int)(i / int.MaxValue)].Get((int)(i % int.MaxValue)))
                     yield return i;
             }
         }
@@ -57,7 +79,7 @@ namespace solvers
         public static bool IsPalindrome(int number)
         {
             string num = number.ToString();
-            for(int i = 0; i < num.Length/2; i++)
+            for (int i = 0; i < num.Length / 2; i++)
             {
                 if (num[i] != num[num.Length - 1 - i])
                     return false;
@@ -71,7 +93,7 @@ namespace solvers
         public static int GCF(int a, int b)
         {
             int temp;
-            while(b != 0)
+            while (b != 0)
             {
                 temp = b;
                 b = a % b;
@@ -86,6 +108,33 @@ namespace solvers
         public static int LCM(int a, int b)
         {
             return (a / GCF(a, b)) * b;
+        }
+
+        public static IEnumerable<ulong> TriangleNumbers()
+        {
+            ulong index = 1;
+            ulong triangle = 0;
+            while (true)
+            {
+                triangle += (triangle + index);
+                index++;
+                yield return triangle;
+            }
+        }
+
+        public static IEnumerable<ulong> GetFactors(ulong num)
+        {
+            for(ulong i = 1; i*i <= num; ++i)
+            {
+                if (num % i == 0)
+                {
+                    yield return i;
+                    if(i*i != num)
+                    {
+                        yield return num / i;
+                    }
+                }
+            }
         }
     }
 }

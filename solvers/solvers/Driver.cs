@@ -12,12 +12,13 @@ namespace solvers
         public static void Main(string[] args)
         {
             MethodInfo Solution;
-            do {
+            do
+            {
                 Console.WriteLine("Enter the number of the problem to solve: ");
                 string Problem = "P" + Console.ReadLine();
                 Solution = typeof(Problems).GetMethod(Problem);
 
-                if(Solution == null) { Console.WriteLine("Sorry, that's not a valid problem."); }
+                if (Solution == null) { Console.WriteLine("Sorry, that's not a valid problem."); }
             } while (Solution == null);
 
             Console.WriteLine("Solving...");
