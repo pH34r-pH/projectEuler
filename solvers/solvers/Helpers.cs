@@ -110,10 +110,10 @@ namespace solvers
             return (a / GCF(a, b)) * b;
         }
 
-        public static IEnumerable<ulong> TriangleNumbers()
+        public static IEnumerable<long> TriangleNumbers()
         {
-            ulong index = 1;
-            ulong triangle = 0;
+            long index = 1;
+            long triangle = 0;
             while (true)
             {
                 triangle += (triangle + index);
@@ -122,9 +122,9 @@ namespace solvers
             }
         }
 
-        public static IEnumerable<ulong> GetFactors(ulong num)
+        public static IEnumerable<long> GetFactors(long num)
         {
-            for(ulong i = 1; i*i <= num; ++i)
+            for(long i = 1; i*i <= num; ++i)
             {
                 if (num % i == 0)
                 {
