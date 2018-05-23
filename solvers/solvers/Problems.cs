@@ -199,7 +199,6 @@ namespace solvers
 
         /// <summary>
         /// The first "triangle number" that has more than 500 divisors
-        /// Not currently working
         /// </summary>
         public static void P12()
         {
@@ -291,7 +290,7 @@ namespace solvers
         public static void P18()
         {
             long maxVal = -1;
-            Node root = Helpers.BuildMaxSumPathTree(Inputs.Problem18, out maxVal);
+            Node root = Helpers.BuildTree(Inputs.Problem18, out maxVal, true);
             Console.WriteLine("The maximum sum path is: " + maxVal);
         }
 

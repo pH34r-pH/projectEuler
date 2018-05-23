@@ -34,26 +34,18 @@ namespace solvers
         public static IEnumerable<long> PrimesUpTo(long maxVal)
         {
             List<BitArray> primes = new List<BitArray>();
-            if (maxVal < int.MaxValue)
+
+            long temp = maxVal;
+            while (temp > int.MaxValue)
             {
-                BitArray slot = new BitArray((int)maxVal);
+                temp -= int.MaxValue;
+                BitArray slot = new BitArray(int.MaxValue);
                 slot.SetAll(true);
                 primes.Add(slot);
             }
-            else
-            {
-                long temp = maxVal;
-                while (temp > int.MaxValue)
-                {
-                    temp -= int.MaxValue;
-                    BitArray slot = new BitArray(int.MaxValue);
-                    slot.SetAll(true);
-                    primes.Add(slot);
-                }
-                BitArray lastslot = new BitArray((int)temp);
-                lastslot.SetAll(true);
-                primes.Add(lastslot);
-            }
+            BitArray lastslot = new BitArray((int)temp);
+            lastslot.SetAll(true);
+            primes.Add(lastslot);
 
             primes[0].Set(0, false);
             primes[0].Set(1, false);
@@ -121,6 +113,11 @@ namespace solvers
             return input.ToString().Select(c => (long)(c - '0')).Sum();
         }
 
+        /// <summary>
+        /// Sum of the letter-values, where A = 1, case insensitive
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns>The sum of the letter values</returns>
         public static long SumLetters(string word)
         {
             return word.ToLower().Select(c => (c - 'a' + 1)).Sum();
@@ -132,7 +129,7 @@ namespace solvers
             long triangle = 0;
             while (true)
             {
-                triangle = (triangle + index);
+                triangle += index;
                 index++;
                 yield return triangle;
             }
@@ -142,18 +139,18 @@ namespace solvers
         /// Returns an iterator that will provide all factors for a number.
         /// </summary>
         /// <param name="num"></param>
-        /// <param name="includeSelf">Set to false to exclude num from the output.</param>
+        /// <param name="includeSelf">Set to false to exclude 'num' from the output.</param>
         /// <returns></returns>
         public static IEnumerable<long> GetFactors(long num, bool includeSelf = true)
         {
-            for(long i = 1; i*i <= num; ++i)
+            for (long i = 1; i * i <= num; ++i)
             {
                 if (num % i == 0)
                 {
-                    if(includeSelf || i != num)
+                    if (includeSelf || i != num)
                         yield return i;
-                        
-                    if(i*i != num && (includeSelf || i != 1))
+
+                    if (i * i != num && (includeSelf || i != 1))
                     {
                         yield return num / i;
                     }
@@ -163,7 +160,7 @@ namespace solvers
 
         public static long CollatzSequence(long start, long count = 0)
         {
-            while(start > 1)
+            while (start > 1)
             {
                 count++;
                 if (start % 2 == 0)
@@ -179,9 +176,9 @@ namespace solvers
             return count;
         }
 
-        public static Node BuildMaxSumPathTree(List<List<int>> data, out long maxVal)
+        public static Node BuildTree(List<List<int>> data, out long maxVal, bool maxSumPath = false)
         {
-            Node Root = new Node() { Data = data[0][0] };
+            Node Root = new Node(data[0][0]);
             List<Node> thisRow = new List<Node>();
             List<Node> lastRow = new List<Node>();
             lastRow.Add(Root);
@@ -190,21 +187,24 @@ namespace solvers
                 int nextRowCount = data[i + 1].Count;
                 for (int j = 0; j < nextRowCount; ++j)
                 {
-                    Node input = new Node() { Data = data[i + 1][j] };
+                    Node input = new Node(data[i + 1][j]);
                     thisRow.Add(input);
                     long leftSum, rightSum;
                     leftSum = rightSum = 0;
                     if (j < nextRowCount - 1)
                     {
-                        leftSum = lastRow[j].Data + input.Data;
+                        if (maxSumPath)
+                            leftSum = lastRow[j].Data + input.Data;
                         lastRow[j].Left = input;
                     }
                     if (j - 1 >= 0)
                     {
-                        rightSum = lastRow[j-1].Data + input.Data;
+                        if (maxSumPath)
+                            rightSum = lastRow[j - 1].Data + input.Data;
                         lastRow[j - 1].Right = input;
                     }
-                    input.Data = leftSum > rightSum ? leftSum : rightSum;
+                    if(maxSumPath)
+                        input.Data = leftSum > rightSum ? leftSum : rightSum;
                 }
                 lastRow = new List<Node>(thisRow);
                 thisRow.Clear();
@@ -219,5 +219,10 @@ namespace solvers
         public long Data;
         public Node Left;
         public Node Right;
+        public Node() { }
+        public Node(long data)
+        {
+            Data = data;
+        }
     }
 }
