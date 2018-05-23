@@ -118,12 +118,7 @@ namespace solvers
 
         public static long SumDigits(BigInteger input)
         {
-            long sum = 0;
-            foreach (char c in input.ToString())
-            {
-                sum += (c - '0');
-            }
-            return sum;
+            return input.ToString().Select(c => (long)(c - '0')).Sum();
         }
 
         public static long SumLetters(string word)
@@ -137,7 +132,7 @@ namespace solvers
             long triangle = 0;
             while (true)
             {
-                triangle += (triangle + index);
+                triangle = (triangle + index);
                 index++;
                 yield return triangle;
             }
