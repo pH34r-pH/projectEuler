@@ -364,7 +364,8 @@ namespace solvers
         public static void P23()
         {
             // limit: 28123
-
+            long sum = Helpers.NotSummableByUpTo(Helpers.AbundantNumbersUpTo(28123).ToList(), 28123).Sum();
+            Console.WriteLine("The sum is: " + sum);
 
         }
     }

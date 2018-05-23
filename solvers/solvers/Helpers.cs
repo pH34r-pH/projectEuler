@@ -69,6 +69,48 @@ namespace solvers
             }
         }
 
+        public static IEnumerable<int> AbundantNumbersUpTo(int maxVal)
+        {
+            BitArray abundant = new BitArray(maxVal);
+            int i = 0;
+            for (; i < maxVal; ++i)
+            {
+                if (GetFactors(i).Sum() > i)
+                {
+                    abundant.Set(i, true);
+                    for (int j = 2 * i; j < maxVal - i; j += i)
+                    {
+                        abundant.Set(j, true);
+                    }
+                }
+                if (abundant.Get(i))
+                {
+                    yield return i;
+                }
+            }
+        }
+
+        public static IEnumerable<int> NotSummableByUpTo(List<int> numbers, int limit)
+        {
+            numbers.Sort();
+            for(int i = 1; i < limit; ++i)
+            {
+                if(!numbers.TakeWhile(d => d < i).Any(n => numbers.Contains(n - i)))
+                {
+                    yield return i;
+                }
+            }
+        }
+
+        public static IEnumerable<IEnumerable<T>> GetKCombsWithRept<T>(IEnumerable<T> list, int length) where T : IComparable
+        {
+            if (length == 1) return list.Select(t => new T[] { t });
+
+            return GetKCombsWithRept(list, length - 1)
+                .SelectMany(t => list.Where(o => o.CompareTo(t.Last()) >= 0),
+                    (t1, t2) => t1.Concat(new T[] { t2 }));
+        }
+
         public static bool IsPalindrome(int number)
         {
             string num = number.ToString();
@@ -203,7 +245,7 @@ namespace solvers
                             rightSum = lastRow[j - 1].Data + input.Data;
                         lastRow[j - 1].Right = input;
                     }
-                    if(maxSumPath)
+                    if (maxSumPath)
                         input.Data = leftSum > rightSum ? leftSum : rightSum;
                 }
                 lastRow = new List<Node>(thisRow);
