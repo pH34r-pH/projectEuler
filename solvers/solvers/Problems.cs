@@ -366,7 +366,15 @@ namespace solvers
             // limit: 28123
             long sum = Helpers.NotSummableByUpTo(Helpers.AbundantNumbersUpTo(28123).ToList(), 28123).Sum();
             Console.WriteLine("The sum is: " + sum);
+        }
 
+        /// <summary>
+        /// The millionth lexicographical permutation of the digits 0-9
+        /// </summary>
+        public static void P24()
+        {
+            string number = Helpers.GetPermutations("0123456789").Skip(999999).First();
+            Console.WriteLine("The permuation is: " + number);
         }
     }
 }

@@ -255,6 +255,39 @@ namespace solvers
             maxVal = lastRow.Max(node => node.Data);
             return Root;
         }
+
+        public static List<string> GetPermutations(string input)
+        {
+            int tail = input.Length - 1;
+            return GetPermutations(input.ToCharArray(), 0, tail).ToList();
+        }
+
+        private static IEnumerable<string> GetPermutations(char[] input, int swap, int tail)
+        {
+            if(swap == tail)
+            {
+                yield return input.ToString();
+            }
+            else
+            {
+                for(int i = swap; i <= tail; ++i)
+                {
+                    SwapChars(ref input[swap], ref input[tail]);
+                    GetPermutations(input, swap + 1, tail);
+                    SwapChars(ref input[swap], ref input[tail]);
+                }
+            }
+        }
+
+        private static void SwapChars(ref char a, ref char b)
+        {
+            if (a == b) return;
+            a ^= b;
+            b ^= a;
+            a ^= b;
+        }
+
+
     }
 
     public class Node
