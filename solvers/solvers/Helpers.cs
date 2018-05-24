@@ -298,6 +298,15 @@ namespace solvers
             a ^= b;
         }
 
+        public static IEnumerable<decimal> UnitFractionsUpTo(int n)
+        {
+            for(decimal i = 1; i < n; ++i)
+            {
+                yield return 1 / i;
+            }
+
+        }
+
 
     }
 

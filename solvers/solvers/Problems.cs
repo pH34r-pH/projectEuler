@@ -279,7 +279,7 @@ namespace solvers
         /// The number of letters used to write out every number from 1 to 1000 as words (e.g. 342 = three hundred and forty-two)
         /// not counting spaces or hyphens
         /// </summary>
-        public static void P17()
+        public static void P17nf()
         {
             // this is more annoying than hard, skiiiiip
         }
@@ -371,7 +371,7 @@ namespace solvers
         /// <summary>
         /// The millionth lexicographical permutation of the digits 0-9
         /// </summary>
-        public static void P24()
+        public static void P24nf()
         {
             string number = Helpers.GetPermutations("0123456789").Skip(999999).First();
             Console.WriteLine("The permuation is: " + number);
@@ -392,6 +392,27 @@ namespace solvers
                 }
             }
             Console.WriteLine("The index is: " + index);
+        }
+
+        /// <summary>
+        /// The fraction with the longest recurring decimal pattern in the set 1/n, n = 1-1000
+        /// </summary>
+        public static void P26nf()
+        {
+            // after making the helper, this is an O(n) search with a little logic
+            // skiiiip
+            foreach(decimal frac in Helpers.UnitFractionsUpTo(1000))
+            {
+
+            }
+        }
+
+        /// <summary>
+        /// Quadratic primes
+        /// </summary>
+        public static void P27()
+        {
+
         }
     }
 }
