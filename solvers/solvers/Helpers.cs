@@ -69,37 +69,38 @@ namespace solvers
             }
         }
 
-        public static IEnumerable<int> AbundantNumbersUpTo(int maxVal)
+        public static IEnumerable<long> AbundantNumbersUpTo(long maxVal)
         {
-            BitArray abundant = new BitArray(maxVal);
-            int i = 0;
+            long i = 0;
             for (; i < maxVal; ++i)
             {
-                if (GetFactors(i).Sum() > i)
-                {
-                    abundant.Set(i, true);
-                    for (int j = 2 * i; j < maxVal - i; j += i)
-                    {
-                        abundant.Set(j, true);
-                    }
-                }
-                if (abundant.Get(i))
+                if (GetFactors(i, false).Sum() > i)
                 {
                     yield return i;
                 }
             }
         }
 
-        public static IEnumerable<int> NotSummableByUpTo(List<int> numbers, int limit)
+        public static IEnumerable<long> NotSummableByUpTo(List<long> numbers, long limit)
         {
+            BitArray sums = new BitArray((int)limit);
             numbers.Sort();
-            for(int i = 1; i < limit; ++i)
+            for(int i = 0; i < numbers.Count; ++i)
             {
-                if(!numbers.TakeWhile(d => d < i).Any(n => numbers.Contains(n - i)))
+                for(int j = i; j < numbers.Count; ++j)
+                {
+                    if(numbers[i] + numbers[j] < limit)
+                        sums.Set((int)(numbers[i] + numbers[j]), true);
+                }
+            }
+            for(int i = 0; i < limit; ++i)
+            {
+                if (!sums.Get(i))
                 {
                     yield return i;
                 }
             }
+            
         }
 
         public static IEnumerable<IEnumerable<T>> GetKCombsWithRept<T>(IEnumerable<T> list, int length) where T : IComparable
