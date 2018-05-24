@@ -14,9 +14,20 @@ namespace solvers
         /// Provides an iterator that returns Fibonacci numbers.
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<int> FibonnaciNums()
+        public static IEnumerable<int> FibonacciNums()
         {
             var numbers = new List<int>() { 0, 1 };
+            while (true)
+            {
+                numbers.Add(numbers[0] + numbers[1]);
+                numbers.RemoveAt(0);
+                yield return numbers[0];
+            }
+        }
+
+        public static IEnumerable<BigInteger> ExtendedFibonacciNums()
+        {
+            var numbers = new List<BigInteger>() { 0, 1 };
             while (true)
             {
                 numbers.Add(numbers[0] + numbers[1]);

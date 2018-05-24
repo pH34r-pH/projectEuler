@@ -24,7 +24,7 @@ namespace solvers
         /// </summary>
         public static void P2()
         {
-            int sum = Helpers.FibonnaciNums().Where(x => x % 2 == 0).TakeWhile(c => c < 4000000).Sum();
+            int sum = Helpers.FibonacciNums().Where(x => x % 2 == 0).TakeWhile(c => c < 4000000).Sum();
             Console.WriteLine("Sum: " + sum);
         }
 
@@ -375,6 +375,23 @@ namespace solvers
         {
             string number = Helpers.GetPermutations("0123456789").Skip(999999).First();
             Console.WriteLine("The permuation is: " + number);
+        }
+
+        /// <summary>
+        /// The index of the first fibonacci number that is 1000 digits long
+        /// </summary>
+        public static void P25()
+        {
+            BigInteger index = 0;
+            foreach(BigInteger num in Helpers.ExtendedFibonacciNums())
+            {
+                index++;
+                if(num.ToString().Length >= 1000)
+                {
+                    break;
+                }
+            }
+            Console.WriteLine("The index is: " + index);
         }
     }
 }
