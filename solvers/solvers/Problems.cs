@@ -350,7 +350,7 @@ namespace solvers
             names.Sort();
             int index = 1;
             long sum = 0;
-            foreach(string name in names)
+            foreach (string name in names)
             {
                 sum += index * Helpers.SumLetters(name);
                 index++;
@@ -383,10 +383,10 @@ namespace solvers
         public static void P25()
         {
             BigInteger index = 0;
-            foreach(BigInteger num in Helpers.ExtendedFibonacciNums())
+            foreach (BigInteger num in Helpers.ExtendedFibonacciNums())
             {
                 index++;
-                if(num.ToString().Length >= 1000)
+                if (num.ToString().Length >= 1000)
                 {
                     break;
                 }
@@ -401,7 +401,7 @@ namespace solvers
         {
             // after making the helper, this is an O(n) search with a little logic
             // skiiiip
-            foreach(decimal frac in Helpers.UnitFractionsUpTo(1000))
+            foreach (decimal frac in Helpers.UnitFractionsUpTo(1000))
             {
 
             }
@@ -410,7 +410,63 @@ namespace solvers
         /// <summary>
         /// Quadratic primes
         /// </summary>
-        public static void P27()
+        public static void P27nf()
+        {
+
+        }
+
+        /// <summary>
+        /// The sum of the diagonals of an array filled in a spiral pattern
+        /// </summary>
+        public static void P28()
+        {
+            // gridsize must be odd
+            int gridsize = 1001;
+            int[,] grid = new int[gridsize+2, gridsize+2];
+            int y, x, num, sum;
+            y = x = (gridsize+2) / 2;
+            grid[y, x] = 1;
+            x++;
+            grid[y, x] = 2;
+            num = 3;
+            while (num <= gridsize * gridsize)
+            {
+                // down
+                if (grid[y, x - 1] != 0 && grid[y - 1, x] == 0)
+                {
+                    y--;
+                }
+                // left
+                else if (grid[y + 1, x] != 0 && grid[y, x - 1] == 0)
+                {
+                    x--;
+                }
+                // up
+                else if (grid[y, x + 1] != 0 && grid[y + 1, x] == 0)
+                {
+                    y++;
+                }
+                // right
+                else if (grid[y, x + 1] == 0 && grid[y - 1, x] != 0)
+                {
+                    x++;
+                }
+                grid[y, x] = num;
+                num++;
+            }
+            // fixes off-by-one
+            sum = -1;
+            for(int i = 0; i < (gridsize+2); ++i)
+            {
+                sum += grid[i, i] + grid[i, (gridsize+2) - 1 - i];
+            }
+            Console.WriteLine("The sum is: " + sum);
+        }
+
+        /// <summary>
+        /// Distinct terms in a sequence
+        /// </summary>
+        public static void P29()
         {
 
         }

@@ -307,6 +307,18 @@ namespace solvers
 
         }
 
+        public static void PrintGrid(int[,] grid, int size, int padding = 3)
+        {
+            for (int i = size-1; i >= 0; --i)
+            {
+                for (int j = 0; j < size; ++j)
+                {
+                    Console.Write("{0,"+ padding + "}", grid[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+
 
     }
 
