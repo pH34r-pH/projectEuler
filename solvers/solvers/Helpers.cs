@@ -319,6 +319,10 @@ namespace solvers
             }
         }
 
+        public static bool SummableNthPower(long val, int exp)
+        {
+            return val.ToString().Select(c => Math.Pow((c - '0'), exp)).Sum() == val;
+        }
 
     }
 

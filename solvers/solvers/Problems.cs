@@ -52,11 +52,11 @@ namespace solvers
         {
             int i, j, max;
             max = 0;
-            for (i = 999; i > 0; --i)
+            for (i = 999; i > 99; --i)
             {
-                for (j = 999; j > 0; --j)
+                for (j = 999; j > 99; --j)
                 {
-                    if (Helpers.IsPalindrome(i * j) && i * j > max)
+                    if (i * j > max && Helpers.IsPalindrome(i * j))
                     {
                         max = i * j;
                     }
@@ -468,7 +468,33 @@ namespace solvers
         /// </summary>
         public static void P29()
         {
+            List<double> distincts = new List<double>();
+            foreach(int a in Enumerable.Range(2, 99))
+            {
+                foreach (int b in Enumerable.Range(2, 99))
+                {
+                    double val = Math.Pow(a, b);
+                    if (!distincts.Contains(val)) { distincts.Add(val); }
+                }
+            }
+            Console.WriteLine("There are {0} unique values.", distincts.Count);
+        }
 
+        /// <summary>
+        /// Sum of all numbers that can be written as a sum of the 5th powers of their digits
+        /// </summary>
+        public static void P30()
+        {
+            long sum = 0;
+            long index = 2;
+            while (true)
+            {
+                if(Helpers.SummableNthPower(index, 5))
+                {
+                    sum += index;
+                }
+                index++;
+            }
         }
     }
 }
