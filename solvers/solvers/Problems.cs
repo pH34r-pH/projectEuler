@@ -485,10 +485,26 @@ namespace solvers
         /// </summary>
         public static void P30()
         {
-            foreach(long power in Helpers.FifthPowers)
+            var values = new List<int>();
+            for(int i = 2; i < 355000; ++i)
             {
-                // sum of every combination, but when to stop?
+                long val = 0;
+                for(int j = i; j > 0; j /= 10)
+                {
+                    val += Helpers.FifthPowers[j % 10];
+                    if(val > i) { break; }
+                }
+                if(val == i) { values.Add(i); }
             }
+            Console.WriteLine("The sum is: " + values.Sum());
+        }
+
+        /// <summary>
+        /// How many distinct ways can you make $2 using 1c, 2c, 5c, 10c, 20c, 50c, 100c, and 200c units
+        /// </summary>
+        public static void P31()
+        {
+            
         }
 
         /// <summary>
