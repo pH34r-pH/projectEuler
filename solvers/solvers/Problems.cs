@@ -500,11 +500,19 @@ namespace solvers
         }
 
         /// <summary>
-        /// How many distinct ways can you make $2 using 1c, 2c, 5c, 10c, 20c, 50c, 100c, and 200c units
+        /// How many distinct ways can you make 200 using units of size 1, 2, 5, 10, 20, 50, 100, and 200
         /// </summary>
         public static void P31()
         {
-            
+            int combos = 0;
+            int[] values = new int[] { 200, 100, 50, 20, 10, 5, 2, 1 };
+            for(int i = 0; i < 8; ++i)
+            {
+                int val = values[i];
+                int remaining = 200 - val;
+
+            }
+            Console.WriteLine("There are {0} combinations.", combos);
         }
 
         /// <summary>
