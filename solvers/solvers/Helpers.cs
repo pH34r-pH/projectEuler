@@ -96,22 +96,22 @@ namespace solvers
         {
             BitArray sums = new BitArray((int)limit);
             numbers.Sort();
-            for(int i = 0; i < numbers.Count; ++i)
+            for (int i = 0; i < numbers.Count; ++i)
             {
-                for(int j = i; j < numbers.Count; ++j)
+                for (int j = i; j < numbers.Count; ++j)
                 {
-                    if(numbers[i] + numbers[j] < limit)
+                    if (numbers[i] + numbers[j] < limit)
                         sums.Set((int)(numbers[i] + numbers[j]), true);
                 }
             }
-            for(int i = 0; i < limit; ++i)
+            for (int i = 0; i < limit; ++i)
             {
                 if (!sums.Get(i))
                 {
                     yield return i;
                 }
             }
-            
+
         }
 
         public static IEnumerable<IEnumerable<T>> GetKCombsWithRept<T>(IEnumerable<T> list, int length) where T : IComparable
@@ -275,13 +275,13 @@ namespace solvers
 
         private static IEnumerable<string> GetPermutations(char[] input, int swap, int tail)
         {
-            if(swap == tail)
+            if (swap == tail)
             {
                 yield return input.ToString();
             }
             else
             {
-                for(int i = swap; i <= tail; ++i)
+                for (int i = swap; i <= tail; ++i)
                 {
                     SwapChars(ref input[swap], ref input[tail]);
                     GetPermutations(input, swap + 1, tail);
@@ -300,7 +300,7 @@ namespace solvers
 
         public static IEnumerable<decimal> UnitFractionsUpTo(int n)
         {
-            for(decimal i = 1; i < n; ++i)
+            for (decimal i = 1; i < n; ++i)
             {
                 yield return 1 / i;
             }
@@ -309,21 +309,17 @@ namespace solvers
 
         public static void PrintGrid(int[,] grid, int size, int padding = 3)
         {
-            for (int i = size-1; i >= 0; --i)
+            for (int i = size - 1; i >= 0; --i)
             {
                 for (int j = 0; j < size; ++j)
                 {
-                    Console.Write("{0,"+ padding + "}", grid[i, j]);
+                    Console.Write("{0," + padding + "}", grid[i, j]);
                 }
                 Console.WriteLine();
             }
         }
 
-        public static bool SummableNthPower(long val, int exp)
-        {
-            return val.ToString().Select(c => Math.Pow((c - '0'), exp)).Sum() == val;
-        }
-
+        public static long[] FifthPowers = new long[] { 0, 1, 32, 243, 1024, 3125, 7776, 16807, 32768, 59049 };
     }
 
     public class Node

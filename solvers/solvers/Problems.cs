@@ -485,16 +485,18 @@ namespace solvers
         /// </summary>
         public static void P30()
         {
-            long sum = 0;
-            long index = 2;
-            while (true)
+            foreach(long power in Helpers.FifthPowers)
             {
-                if(Helpers.SummableNthPower(index, 5))
-                {
-                    sum += index;
-                }
-                index++;
+                // sum of every combination, but when to stop?
             }
+        }
+
+        /// <summary>
+        /// Find the smallest prime that is part of an 8-prime family
+        /// </summary>
+        public static void P51()
+        {
+
         }
     }
 }
