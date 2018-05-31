@@ -522,5 +522,24 @@ namespace solvers
         {
 
         }
+
+        /// <summary>
+        /// P18, but bigger
+        /// </summary>
+        public static void P67()
+        {
+            var triangle = new List<List<int>>();
+            foreach(string s in File.ReadAllLines("../../triangle.txt"))
+            {
+                triangle.Add(new List<int>());
+                foreach(string num in s.Split(' '))
+                {
+                    triangle.Last().Add(int.Parse(num));
+                }
+            }
+            long max = 0;
+            Helpers.BuildTree(triangle, out max, true);
+            Console.WriteLine("The max path is: " + max);
+        }
     }
 }
